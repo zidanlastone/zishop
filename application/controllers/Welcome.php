@@ -20,18 +20,20 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$data['content'] = 'template/content';
-		$this->load->view('template/template', $data);
+		$this->load->model('product_model');
+		$data['content'] = 'pages/product-gallery';
+		$data['products'] = $this->product_model->getAll()->result();
+		$this->load->view('template/guest', $data);
 	}
 
 	public function about(){
 		$data['content'] = 'pages/about';
-		$this->load->view('template/template', $data);
+		$this->load->view('template/guest', $data);
 	}
 
 	public function contact(){
 		$data['content'] = 'pages/contact';
-		$this->load->view('template/template', $data);
+		$this->load->view('template/guest', $data);
 	}
 
 
