@@ -12,6 +12,10 @@
 					<?php echo '<p class="alert alert-success">'.$this->session->flashdata('user_login').'</p>'; ?>
 				<?php endif; ?>
 
+				<?php if ($this->session->flashdata('user_registered')): ?>
+					<?php echo '<p class="alert alert-success text-center">'.$this->session->flashdata('user_registered').'</p>'; ?>
+				<?php endif; ?>
+
 				<?php if ($this->session->flashdata('login_failed')): ?>
 					<?php echo '<p class="alert alert-danger">'.$this->session->flashdata('login_failed').'</p>'; ?>
 				<?php endif; ?>
@@ -36,6 +40,9 @@
 									Login
 								</button>
 							</form>
+							<div class="form-group mt-2">
+								Not registerd yet?<a href="<?php echo site_url('admin/user/register')?>">Register</a>
+							</div>
 						</div>
 					</div>
 				</div>

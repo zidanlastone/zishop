@@ -10,6 +10,16 @@ class User extends CI_Controller{
 		$this->load->model('user_model');
 	}
 
+	public function list(){
+		if($this->session->userdata('logged_in') === false && $this->session->userdata('role') !== 1){
+			redirect('admin');
+		}else{
+			$data['content'] = 'admin/userlist';
+			$data['users'] = $this->user_model->getUsers();
+			$this->load->view('Template/template',$data);
+		}
+	}
+
 	public function index(){
 		$this->form_validation->set_rules('username','Username','required');
 		$this->form_validation->set_rules('password','Password','required');
@@ -20,12 +30,12 @@ class User extends CI_Controller{
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
 			$user = $this->user_model->login($username, $password);
-
 			if($user){
 				$user_data = array(
-					'id_user' => $user,
+					'id_user' => $user['user_id'],
 					'username' => $username,
-					'logged_in' => TRUE
+					'logged_in' => TRUE,
+					'role' => $user['role']
 				);
 				$this->session->set_userdata($user_data);
 				$this->session->set_flashdata('user_login','You are now Login');
@@ -45,12 +55,29 @@ class User extends CI_Controller{
     $this->form_validation->set_rules('password2','Confirm Password','matches[password]');
 
 		if ($this->form_validation->run()===FALSE) {
-			$data['content'] = 'Template/register';
-			$this->load->view('Template/template', $data);
+			$this->load->view('Template/register');
 		}else{
 			$this->user_model->register();
-			$this->session->set_flashdata('user_registered','You are now Registered and can Login');
+			$this->session->set_flashdata('user_registered','You are now registered and you must contact admin to actiavte account');
 			redirect('admin/user');
+		}
+	}
+
+	public function activate(){
+		if($this->session->userdata('logged_in') === false && $this->session->userdata('role') !== 1){
+			redirect('admin');
+		}else{
+			$this->user_model->activate($this->uri->segment(4));
+			redirect('admin/user/list');
+		}
+	}
+
+	public function delete(){
+		if($this->session->userdata('logged_in') === false && $this->session->userdata('role') !== 1){
+			redirect('admin');
+		}else{
+			$this->user_model->delete($this->uri->segment(4));
+			redirect('admin/user/list');
 		}
 	}
 

@@ -16,10 +16,7 @@
 			<li class="nav-item active">
 				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="<?php echo site_url('admin/user');?>">Login</a>
-			</li>
-			<?php if ($this->session->userdata('logged_in') === true ): ?>
+			<?php if ($this->session->userdata('logged_in') == true ): ?>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,6 +26,10 @@
 						<a class="dropdown-item" href="#">account settings</a>
 						<a class="dropdown-item" href="<?php echo site_url('admin/user/logout');?>">Logout</a>
 					</div>
+				</li>
+			<?php else:?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo site_url('admin/user');?>">Login</a>
 				</li>
 			<?php endif; ?>
 		</ul>

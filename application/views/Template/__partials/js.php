@@ -5,6 +5,11 @@
 
     <!-- Menu Toggle Script -->
     <script>
+		function deleteConfirm(url){
+			$('#btn-delete').attr('href', url);
+			$('#deleteModal').modal();
+		}
+
         $("#menu-toggle").click(function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");

@@ -17,7 +17,7 @@ class Products extends CI_Controller
 			redirect('admin/user');
 		}
 
-		$data["products"] = $this->product_model->getAll()->resilt();
+		$data["products"] = $this->product_model->getAll()->result();
 		$data['content'] = 'admin/product/list';
         $this->load->view("Template/template", $data);
     }

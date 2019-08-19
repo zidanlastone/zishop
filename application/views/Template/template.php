@@ -20,7 +20,10 @@
         <!-- /#page-content-wrapper -->
 
     </div>
-    <!-- /#wrapper -->
+	<!-- /#wrapper -->
+	
+	<?php $this->load->view('Template/__partials/modal'); ?>
+
 
 	<?php $this->load->view('Template/__partials/js'); ?>
 

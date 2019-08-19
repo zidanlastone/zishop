@@ -8,6 +8,23 @@ class User_model extends CI_Model{
 		$this->load->database();
 	}
 
+	public function getUserCount(){
+		return $this->db->get($this->table)->num_rows();
+	}
+
+	public function getUsers(){
+		$this->db->where_not_in('password');
+		return $this->db->get($this->table)->result();
+	}
+
+	public function activate($id){
+		$this->db->set('status', '1');
+		$this->db->where('user_id', $id);
+		$this->db->update($this->table );
+	}
+
+
+
 	private function getRows($where = array()){
 		if (!empty($where)){
 		$this->db->where($where);
@@ -49,12 +66,21 @@ class User_model extends CI_Model{
 		$result = $this->db->get($this->table);
 
 			if ($result->num_rows() == 1) {
-				return $result->row(0)->user_id;
+				$userdata = array(
+					'username' =>$result->row(0)->username,
+					'user_id' => $result->row(0)->user_id,
+					'role' => $result->row(0)->role
+				);
+				return $userdata;
 			}else{
 				return false;
 			}
 		}
 
+	}
+
+	public function delete($id){
+		$this->db->delete($this->table, array('user_id' => $id));
 	}
 
 }
